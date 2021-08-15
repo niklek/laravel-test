@@ -21,5 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/users', [UserController::class, 'index']);
-
+Route::delete('/users/{id}', [UserController::class, 'destroy']);
 Route::put('/users/{userId}/details/{id}', [UserDetailController::class, 'update']);

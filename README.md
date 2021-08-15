@@ -54,6 +54,13 @@ PUT http://localhost:8000/api/users/6/details/5
 ```
 
 ### Delete user
+* API check if user exists and if the user has detail
+* API returns 409 HTTP Response code if the user has detail
 
+To run tests:
+```
+vendor/bin/phpunit --filter test_user_is_deleted_when_user_detail_does_not_exist
+vendor/bin/phpunit --filter test_user_is_not_deleted_when_user_detail_exist
+```
 
 

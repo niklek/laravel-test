@@ -74,12 +74,31 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * Allows to delete a user only if user detail does not exist
      *
-     * @param  \App\Models\User  $user
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(int $id)
     {
-        //
+        $user = User::with('detail')->find($id);
+        if (!$user) {
+            return response()->json([
+                'error' => [
+                    'message' => 'User not found',
+                ]
+            ], 404);
+        }
+
+        // check if the user has detail
+        if ($user->detail) {
+            return response()->json([
+                'error' => [
+                    'message' => 'User can not be deleted',
+                ]
+            ], 409);
+        }
+
+        $user->delete();
     }
 }

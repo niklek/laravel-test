@@ -9,7 +9,14 @@ class UserDetail extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id', 'user_id', 'citizenship_country_id', 'first_name', 'last_name', 'phone_number'];
+    protected $fillable = [
+        'id',
+        'user_id',
+        'citizenship_country_id',
+        'first_name',
+        'last_name',
+        'phone_number',
+    ];
 
     public $timestamps = false;
 
