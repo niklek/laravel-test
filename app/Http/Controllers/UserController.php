@@ -18,9 +18,13 @@ class UserController extends Controller
         if ($request->has('country')) {
             $countryCode = strtoupper($countryCode);
         }
-        
+        // do not accept empty value
         if (empty($countryCode)) {
-            // @todo handle case: 400 Bad Request
+            return response()->json([
+                'error' => [
+                    'message' => 'country is required',
+                ]
+            ], 400);
         }
 
         // @todo create resources, return resource with relationships
