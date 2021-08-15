@@ -23,14 +23,24 @@ php artisan db:seed
 ```
 
 ## Usage
+```
+php artisan serve
+```
 ### Get active users, filtered by country
+* API queries and returns only active users
+* Accepts GET param `country` which is two-letter country code, by default `AT`
+* Loads relationships: user detail and country
 ```
 GET http://localhost:8000/api/users
 GET http://localhost:8000/api/users?country=at
 GET http://localhost:8000/api/users?country=ru
 ```
 
-### Update user details
+### Update user detail
+* API validates the payload
+* Checks user if exists
+* Checks user detail if exists
+* Checks if user detail id belongs for the user
 ```
 PUT http://localhost:8000/api/users/6/details/5
 {
@@ -42,5 +52,8 @@ PUT http://localhost:8000/api/users/6/details/5
     "phone_number": "00436645555555"
 }
 ```
+
+### Delete user
+
 
 
