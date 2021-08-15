@@ -15,8 +15,8 @@ class User extends Authenticatable
     /**
      * Get the user details associated with the user.
      */
-    public function userDetails()
+    public function detail()
     {
-        return $this->hasOne(UserDetails::class);
+        return $this->hasOne(UserDetail::class);
     }
 }

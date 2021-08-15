@@ -8,34 +8,30 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     /**
-     * Returns only active users who have given citizenship, by default AT
+     * Returns active users who have specific citizenship, by default 'AT'
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-        $country = $request->get('country', 'AT'); // iso2
+        $countryCode = $request->get('country', 'AT'); // iso2
         if ($request->has('country')) {
-            $country = strtoupper($country);
+            $countryCode = strtoupper($countryCode);
         }
         
-        if (empty($country)) {
-            // @todo handle case
+        if (empty($countryCode)) {
+            // @todo handle case: 400 Bad Request
         }
 
-        return User::with('userDetails', 'userDetails.country')
+        // @todo create resources, return resource with relationships
+        return User::with('detail', 'detail.country')
             ->where('active', '=', 1)
             ->whereHas(
-                'userDetails.country', function($q) use($country) {
-                    $q->where('iso2', $country);
+                'detail.country', function($q) use($countryCode) {
+                    $q->where('iso2', $countryCode);
                 }
             )
             ->get();
-    }
-
-    public function editDetails()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-    {
-        return 'Edit details';
     }
 
     /**
@@ -64,10 +60,10 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, int $id)
     {
         //
     }

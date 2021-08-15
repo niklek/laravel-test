@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/user', [UserController::class, 'index']);
+Route::get('/users', [UserController::class, 'index']);
 
-Route::get('user/{id}/details', [UserController::class, 'editDetails']);
+Route::put('/users/{userId}/details/{id}', [UserDetailController::class, 'update']);
