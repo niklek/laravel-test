@@ -7,14 +7,19 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    private const COUNTRY_CODE_ISO2_DEFAULT = 'AT';
+
+    private const USER_IS_ACTIVE = 1;
+
     /**
      * Returns active users who have specific citizenship, by default 'AT'
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-        $countryCode = $request->get('country', 'AT'); // iso2
+        $countryCode = $request->get('country', static::COUNTRY_CODE_ISO2_DEFAULT); // iso2
         if ($request->has('country')) {
             $countryCode = strtoupper($countryCode);
         }
@@ -29,7 +34,7 @@ class UserController extends Controller
 
         // @todo create resources, return resource with relationships
         return User::with('detail', 'detail.country')
-            ->where('active', '=', 1)
+            ->where('active', '=', static::USER_IS_ACTIVE)
             ->whereHas(
                 'detail.country', function($q) use($countryCode) {
                     $q->where('iso2', $countryCode);
