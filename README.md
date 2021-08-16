@@ -15,6 +15,9 @@ docker run --name phpmyadmin-local -d --link mysql-local:db -p 8081:80 phpmyadmi
 http://localhost:8081/
 ```
 ### Update db credentials in `.env` file
+* `DB_DATABASE`
+* `DB_USERNAME`
+* `DB_PASSWORD`
 
 ## Seed database
 Put sql files in `database/seeders/sql` and run
@@ -54,7 +57,7 @@ PUT http://localhost:8000/api/users/6/details/5
 ```
 
 ### Delete user
-* API check if user exists and if the user has detail
+* API check if user exists and if the user has detail, deletes the user only if detail does not exist
 * API returns 409 HTTP Response code if the user has detail
 
 To run tests:
@@ -63,4 +66,10 @@ vendor/bin/phpunit --filter test_user_is_deleted_when_user_detail_does_not_exist
 vendor/bin/phpunit --filter test_user_is_not_deleted_when_user_detail_exist
 ```
 
-
+### Get all transactions
+* API returns all transactions from a source
+* Requires GET param `source` which can be either `db` or `csv`
+```
+GET http://localhost:8000/api/transactions?source=db
+GET http://localhost:8000/api/transactions?source=csv
+```
